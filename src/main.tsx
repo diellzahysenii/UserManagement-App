@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { UsersProvider } from "./features/users/UserContext.tsx";
 import UsersPage from "./features/users/pages/UsersPage.tsx";
 import UserDetailsPage from "./features/users/pages/UsersDetailsPage.tsx";
 import { usersListLoader, userLoader } from "./features/users/loader.ts";
