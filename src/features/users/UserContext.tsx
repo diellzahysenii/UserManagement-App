@@ -1,4 +1,3 @@
-// src/features/users/UsersContext.tsx
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { fetchUsers } from "./api";
 import type { User } from "./types";
@@ -10,7 +9,7 @@ type UsersCtx = {
   users: User[];
   loading: boolean;
   error: string | null;
-  addLocalUser: (u: Pick<User, "name" | "email">) => void;
+  addLocalUser: (u: { name: string; email: string; companyName?: string }) => void,
   updateUser: (u: User) => void;
   deleteUser: (id: number) => void;
   search: string; setSearch: (s: string) => void;
@@ -39,11 +38,17 @@ export function UsersProvider({ children }: { children: React.ReactNode }) {
     setSortDir(prev => (k === sortKey ? (prev === "asc" ? "desc" : "asc") : "asc"));
     setSortKey(k);
   };
-
-  const addLocalUser = (u: Pick<User, "name" | "email">) => {
-    const id = -Date.now(); // negative id avoids collision with API ids
-    setUsers(prev => [{ id, ...u, isLocal: true }, ...prev]);
+  const addLocalUser = (u: { name: string; email: string; companyName?: string }) => {
+    const id = -Date.now();
+    setUsers(prev => [{
+      id,
+      name: u.name,
+      email: u.email,
+      isLocal: true,
+      company: u.companyName ? { name: u.companyName, catchPhrase: "", bs: "" } : undefined
+    }, ...prev]);
   };
+  
   const updateUser = (u: User) => setUsers(prev => prev.map(x => x.id === u.id ? u : x));
   const deleteUser = (id: number) => setUsers(prev => prev.filter(x => x.id !== id));
 

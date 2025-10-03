@@ -1,4 +1,3 @@
-// UserTable.tsx
 import { Link } from "react-router-dom";
 import type { User } from "../types";
 
@@ -28,7 +27,7 @@ export default function UserTable({
         {users.map(u => (
           <tr key={u.id}>
             <td>
-              <Link className="link" to={`/users/${u.id}`}>{u.name}</Link>
+            <Link className="link" to={`/users/${u.id}`} state={{ user: u }}>{u.name}</Link>
               {u.isLocal && <span className="badge">local</span>}
             </td>
             <td>{u.email}</td>
